@@ -1,0 +1,10 @@
+{%extends 'base.html'%}
+{%block content%}
+	{%if user.is_authenticated%}
+		<h1>Добро пожаловать, {{user.first_name}}</h1>
+		<!--<img src="{{user.get_profile.photo}}" class="img-account">-->
+	{%else%}
+		<p id="p-large">Пожалуйста, зарегистрируйтесь, или войдите под своей учетной записью</p>
+	{%endif%}
+		<br><a href="/logout">Выйти</a>
+{%endblock%}
