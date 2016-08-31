@@ -1,0 +1,20 @@
+<script src="/static/js/settings.js" type="text/javascript"></script>
+
+<form action="{% url 'ajax' %}" method="POST">
+{% csrf_token %}
+<input id="text-ajax" type="text" value="" />
+<input id="clickme" type="button" value="Кликни меня" />
+</form>
+
+<script type="text/javascript">
+$(document).ready(function(){
+    $('#clickme').click(function(){
+ $.ajaxSetup({
+     success: function(data){
+  data = $.parseJSON(data);
+                alert(data['new-text']);
+            }
+         });
+       $.post('/ajax/test/', {'text': $('#test-ajax').val()});
+})});
+</script>

@@ -9,4 +9,5 @@ urlpatterns = [
     url(r'^login$', views.login),
     url(r'^home/$', views.home),
     url(r'^logout/$', views.logout),
+    url(r'^ajax/test/$', views.test_ajax, name='ajax'),
 ]
