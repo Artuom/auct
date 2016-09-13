@@ -13,8 +13,15 @@ class UserProfile(models.Model):
     photo = models.TextField()
 
 
+class Category(models.Model):
+    name = models.CharField(u'Категория', max_length=30)
+    
+    def __unicode__(self):
+        return self.name
+    
+
 class Lot(models.Model):
-    name = models.TextField(u"предложение", max_length=100)
+    name = models.CharField(u"предложение", max_length=100)
     description = models.TextField(u"описание предложения")
     # photo = models.ImageField(u"фотография", blank=True, upload_to='%Y-%m-%d')
     start_price = models.IntegerField(u"стартовая цена")
@@ -24,6 +31,7 @@ class Lot(models.Model):
     start_date = models.DateTimeField(u'начало продажи')
     end_date = models.DateTimeField(u'окончание продажи')
     lastest_propose = models.DateTimeField(u'последнее предложение', blank=True, null=True)
+    category = models.ForeignKey(Category, verbose_name = u'Категория', default=1)
 
     def save(self):
         if self.price is None:
@@ -37,9 +45,9 @@ class Lot(models.Model):
     def __unicode__(self):
         return self.name
 
-    class Meta:
-        verbose_name = u'Лот'
-        verbose_name_plural = u'Лоты'
+    # class Meta:
+    #     verbose_name = u'Лот'
+    #     verbose_name_plural = u'Лоты'
 
     def propose(self):
         lastest = self.propose_set.order_by('-date')
@@ -65,8 +73,8 @@ class Bet(models.Model):
         list_display = ("lot", "price")
 
     class Meta:
-        verbose_name = u"Предложение"
-        verbose_name_plural = u"Предложения"
+        verbose_name = u"Ставка"
+        verbose_name_plural = u"Ставки"
 
     def __unicode__(self):
         return self.person.username

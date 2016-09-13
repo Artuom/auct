@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% block javascript %}
+
+{% endblock %}
+{% block content %}
+	{% for category in categories %}
+<p>{{category}}</p>
+	{% endfor %}
+  <form method="post" action="{% url 'add_category' %}">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Добавить категорию</button>
+  </form>
+<br>
+{% endblock %}

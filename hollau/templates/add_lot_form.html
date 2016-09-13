@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% block javascript %}
+	<link rel="stylesheet" type="text/css" href="/static/jquery.countdown.css">
+	<script type="text/javascript" src="/static/script_section.js"></script>
+	<script type="text/javascript" src="/static/js/jquery.countdown.js"></script>
+	
+	
+
+{% endblock %}
+{% block content %}
+  <form method="post" action="{% url 'add_lot' %}">
+    {% csrf_token %}
+    {{ form.as_p }}
+
+    <button type="submit">Добавить лот</button>
+  </form>
+<br>
+
+<form>
+<input type="text" name="section" id="select_section" value=""/>
+    <p id = "help_message_for_section"></p>
+</form>
+
+{% endblock %}

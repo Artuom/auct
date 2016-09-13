@@ -1,0 +1,18 @@
+{%extends 'base.html'%}
+
+{% block javascript %}
+	<script type="text/javascript" src="/static/script.js"></script>
+{% endblock %}
+
+{%block content%}
+	<h1>Тестовая страница для jquery</h1>
+	<form action="{% url 'test_form'%}" method="post">
+{% csrf_token %}
+    <label for="Username">Username:</label><br />
+    <input type="text" name="username" id="test_username" value="" />
+    <p id = "help_message"></p>
+<input type="submit" value="Vote" />
+</form>
+	
+{%endblock%}
+
