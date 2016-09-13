@@ -1,12 +1,15 @@
 {% extends 'base.html' %}
 {% block javascript %}
 	<link rel="stylesheet" type="text/css" href="/static/jquery.countdown.css">
+	<link rel="stylesheet" type="text/css" href="/static/datetimepicker/jquery.datetimepicker.css"/>
 	<script type="text/javascript" src="/static/script_section.js"></script>
 	<script type="text/javascript" src="/static/js/jquery.countdown.js"></script>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8"/>
 	
 	
 
 {% endblock %}
+
 {% block content %}
   <form method="post" action="{% url 'add_lot' %}">
     {% csrf_token %}
@@ -21,4 +24,15 @@
     <p id = "help_message_for_section"></p>
 </form>
 
+<script src="/static/datetimepicker/jquery.js"></script>
+<script src="/static/datetimepicker/jquery.datetimepicker.full.js"></script>
+<script>
+    $("[id='id_end_date']").each(function (){ 
+   		$(this).attr("id", "date2");
+	});
+    $("[id='id_start_date']").each(function (){ 
+   		$(this).attr("id", "date1");
+	});
+</script>
+<script src="/static/datetimepicker/datetime.js"></script>
 {% endblock %}

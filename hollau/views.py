@@ -35,7 +35,13 @@ def logout(request):
 
 def add_lot(request):
     if request.method == 'POST':
-        pass
+        form = forms.Lot(request.POST)
+        print form
+        if form.is_valid():
+            data = form.cleaned_data
+            print data
+        else:
+            return HttpResponse('NOK')
     else:
         context = {}
         return render(request, 'add_lot_form.html', {'form':forms.Lot})

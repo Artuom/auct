@@ -25,7 +25,7 @@ class Lot(models.Model):
     description = models.TextField(u"описание предложения")
     # photo = models.ImageField(u"фотография", blank=True, upload_to='%Y-%m-%d')
     start_price = models.IntegerField(u"стартовая цена")
-    current_price = models.IntegerField(u"текущая цена", blank=True)
+    current_price = models.IntegerField(u"текущая цена", blank=True, null=True)
     sold = models.BooleanField(u"продано")
     author = models.ForeignKey(User, verbose_name=u"Аукционатор", related_name='lots', default="1")
     start_date = models.DateTimeField(u'начало продажи')
@@ -33,10 +33,6 @@ class Lot(models.Model):
     lastest_propose = models.DateTimeField(u'последнее предложение', blank=True, null=True)
     category = models.ForeignKey(Category, verbose_name = u'Категория', default=1)
 
-    def save(self):
-        if self.price is None:
-            self.price = self.start_price
-        super(Lot, self).save()
 
     class Admin:
         list_display = ("name", "price", "propose", "lastest_propose", "bought")

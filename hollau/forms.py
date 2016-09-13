@@ -7,7 +7,7 @@ from django import forms
 class Lot(forms.ModelForm):
     class Meta:
         model = Lot
-        fields = ['name', 'description', 'start_price', 'end_date', 'category']
+        fields = ['name', 'description', 'start_price', 'start_date','end_date', 'category']
 
 class CategoryAdd(forms.ModelForm):
     class Meta:
