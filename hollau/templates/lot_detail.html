@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block javascript %}
+		<meta charset="utf-8" />
+        <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Open+Sans+Condensed:300" />
+        <link rel="stylesheet" href="{% static 'countdown_style.css' %}" />
+        <link rel="stylesheet" href="{% static 'jquery.countdown.css' %} " />
+	
+		<div id="countdown"></div>
+		<p id="note"></p>
+		<script src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
+		<script src="{% static 'js/jquery.countdown.js' %}"></script>
+		<script src="{% static 'js/countdown.js' %}"></script>
+		
+{% endblock %}
+
+{% block content %}
+
+    
+<p>Вы: {{user}}</p>
+<p>Название лота: {{lot.name}}</p>
+<p>Описание лота: {{lot.description}}</p>
+<p>Дата создания: {{lot.start_date|date:"Y-m-d H:i"}}</p>
+<p id="end_date">Дата окончания: {{lot.end_date|date:"Y-m-d H:i"}}</p>
+<p>Владелец лота: {{lot.author}}</p>
+<p>Категория: {{lot.category}}</p>
+<body>		
+</body>
+{% endblock %}
+

@@ -5,25 +5,15 @@
 	<script type="text/javascript" src="/static/script_section.js"></script>
 	<script type="text/javascript" src="/static/js/jquery.countdown.js"></script>
 	<meta http-equiv="content-type" content="text/html; charset=utf-8"/>
-	
-	
-
 {% endblock %}
 
 {% block content %}
-  <form method="post" action="{% url 'add_lot' %}">
+<form method="post" action="{% url 'lot_edit' pk%}">
     {% csrf_token %}
     {{ form.as_p }}
-
-    <button type="submit">Добавить лот</button>
-  </form>
-<br>
-
-<form>
-<input type="text" name="section" id="select_section" value=""/>
-    <p id = "help_message_for_section"></p>
+    {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+<p><input type="submit" value="OK"></p>
 </form>
-
 <script src="/static/datetimepicker/jquery.js"></script>
 <script src="/static/datetimepicker/jquery.datetimepicker.full.js"></script>
 <script>

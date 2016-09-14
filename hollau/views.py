@@ -36,10 +36,26 @@ def logout(request):
 def add_lot(request):
     if request.method == 'POST':
         form = forms.Lot(request.POST)
-        print form
+        # print request.user.id
+        # print dir(request.session)
         if form.is_valid():
             data = form.cleaned_data
-            print data
+            name = data['name']
+            description = data['description']
+            start_price = data['start_price']
+            start_date = data['start_date']
+            end_date = data['end_date']
+            category = data['category']
+            models.Lot.objects.create(
+                name=name, 
+                description=description,   
+                start_price=start_price, 
+                start_date=start_date, 
+                end_date=end_date, 
+                author = request.user,
+                category = category,
+                )
+            return HttpResponse('Ok')
         else:
             return HttpResponse('NOK')
     else:
@@ -67,7 +83,6 @@ def add_category(request):
         form = forms.CategoryAdd(request.POST)
         if form.is_valid():
             data=form.cleaned_data
-            print data
             category_name = data['name']
         
             try:
@@ -77,7 +92,34 @@ def add_category(request):
         return render(request, 'addcategory.html', {'form':forms.CategoryAdd(), 'categories':categories})
 
 
-def make_bet(request):
+def lot_edit(request, pk):
+    try:
+        lot = models.Lot.objects.get(pk=pk)
+    except ObjectDoesNotExist:
+        return HttpResponse('No such lot')
+    if request.user == lot.author:
+        if request.method == 'GET':
+            return render(request, 'editLot.html', {'form':forms.Lot(instance = lot), 'pk': pk
+        })
+        else:
+            form = forms.Lot(request.POST)
+            if form.is_valid():
+                data = form.cleaned_data
+                lot.name = data['name']
+                lot.description = data['description']
+                lot.start_price = data['start_price']
+                lot.start_date = data['start_date']
+                lot.end_date = data['end_date']
+                lot.save()
+                return HttpResponse('Your lot was edited')
+    else:
+        return HttpResponse("You can't edit this lot")
+
+def lot_detail(request, pk):
+    lot = models.Lot.objects.get(pk=pk)
+    return render(request, 'lot_detail.html', {'lot': lot, 'pk':pk})
+
+def make_bet(request, pk):
     if request.method == 'POST':
         pass
 

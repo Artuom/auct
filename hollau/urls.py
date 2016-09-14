@@ -10,6 +10,8 @@ urlpatterns = [
     url(r'^home/$', views.home),
     url(r'^logout/$', views.logout),
     url(r'^add_lot/$', views.add_lot, name='add_lot'),
+    url(r'^lot_edit/(?P<pk>[0-9]+)/$', views.lot_edit, name='lot_edit'),
+    url(r'^lot_detail/(?P<pk>[0-9]+)/$', views.lot_detail, name='lot_detail'),
     url(r'^section_check/$', views.section_check, name='section_check'),
     url(r'^add_category/$', views.add_category, name='add_category'),
     url(r'^test_form/$', views.test_form, name='test_form'),

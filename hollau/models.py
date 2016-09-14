@@ -9,7 +9,7 @@ import datetime
 
 
 class UserProfile(models.Model):
-    user = models.ForeignKey(User, unique=True, related_name='profile')
+    user = models.ForeignKey(User, related_name='profile')
     photo = models.TextField()
 
 
@@ -26,7 +26,7 @@ class Lot(models.Model):
     # photo = models.ImageField(u"фотография", blank=True, upload_to='%Y-%m-%d')
     start_price = models.IntegerField(u"стартовая цена")
     current_price = models.IntegerField(u"текущая цена", blank=True, null=True)
-    sold = models.BooleanField(u"продано")
+    sold = models.BooleanField(u"продано", default = False)
     author = models.ForeignKey(User, verbose_name=u"Аукционатор", related_name='lots', default="1")
     start_date = models.DateTimeField(u'начало продажи')
     end_date = models.DateTimeField(u'окончание продажи')
