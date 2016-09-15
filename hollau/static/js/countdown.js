@@ -3,8 +3,9 @@ $(function(){
     var text_date = $("#end_date").text();
     ts = new Date(text_date);
     ts = ts.getTime();
+
 	$('#countdown').countdown({
-        
+
 		timestamp	: ts,
 		callback	: function(days, hours, minutes, seconds){
 			var message = "";
@@ -13,10 +14,10 @@ $(function(){
 			message += hours + " часов" + ", ";
 			message += minutes + " минут" + " и ";
 			message += seconds + " секунд" + " <br />";
-			message += "осталось до финала!";
-			
+			message += "осталось до завершения!";
+
             } else {
-                message = 'Finished';
+                message = 'Завершено!';
             }
             note.html(message);
 		}

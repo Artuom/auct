@@ -15,24 +15,23 @@ class UserProfile(models.Model):
 
 class Category(models.Model):
     name = models.CharField(u'Категория', max_length=30)
-    
+
     def __unicode__(self):
         return self.name
-    
+
 
 class Lot(models.Model):
     name = models.CharField(u"предложение", max_length=100)
     description = models.TextField(u"описание предложения")
     # photo = models.ImageField(u"фотография", blank=True, upload_to='%Y-%m-%d')
-    start_price = models.IntegerField(u"стартовая цена")
-    current_price = models.IntegerField(u"текущая цена", blank=True, null=True)
-    sold = models.BooleanField(u"продано", default = False)
+    start_price = models.FloatField(u"стартовая цена")
+    current_price = models.FloatField(u"текущая цена", blank=True, null=True)
+    sold = models.BooleanField(u"продано", default=False)
     author = models.ForeignKey(User, verbose_name=u"Аукционатор", related_name='lots', default="1")
-    start_date = models.DateTimeField(u'начало продажи')
+    start_date = models.DateTimeField(u'начало продажи', auto_now_add=True)
     end_date = models.DateTimeField(u'окончание продажи')
     lastest_propose = models.DateTimeField(u'последнее предложение', blank=True, null=True)
-    category = models.ForeignKey(Category, verbose_name = u'Категория', default=1)
-
+    category = models.ForeignKey(Category, verbose_name=u'Категория', default=1)
 
     class Admin:
         list_display = ("name", "price", "propose", "lastest_propose", "bought")
