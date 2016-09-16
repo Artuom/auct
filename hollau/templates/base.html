@@ -6,7 +6,7 @@
     <title>Шаблон Bootstrap 101</title>
     <!-- Bootstrap -->
     <link href={% static "bootstrap/css/bootstrap.min.css" %} rel="stylesheet">
-    <link href={% static 'offcanvas.css' %} rel="stylesheet">
+    <link href={% static 'offcanvas.css' %} rel="stylesheet">'
     <link rel="stylesheet" type="text/css" href="{% static 'style.css' %}">
     {% block stylesheet %}{% endblock %}
   </head>
@@ -27,10 +27,14 @@
         </div>
         <div id="navbar" class="collapse navbar-collapse navbar-right">
           <ul class="nav navbar-nav">
+              {%if user.is_authenticated%}
             <li><a href="#">{{user.first_name}}</a></li>
+              {% else %}
+              <li><a href="{%url 'login' %}">Anonymys</a></li>
+              {% endif %}
             <li class="active"><a href="#">Мои лоты</a></li>
             <li><a href="#about">Мои ставки</a></li>
-            <li><a href="#contact">Выйти</a></li>
+            <li><a href="{% url 'logout' %}">Выйти</a></li>
           </ul>
         </div><!-- /.nav-collapse -->
       </div><!-- /.container -->

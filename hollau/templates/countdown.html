@@ -3,15 +3,36 @@
         <meta charset="utf-8" />
         <title></title>
         <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Open+Sans+Condensed:300" />
-        
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
         
     </head>
     <body>
-        <p id="end_date">2016-09-15 22:10</p>
+        
         <link rel="stylesheet" href="/static/countdown_style.css" />
         <link rel="stylesheet" href="/static/jquery.countdown.css" />
+        <!--<div class="container-fluid">
+      	<div class="row-fluid">
+      	<div class="span3">
 		<div id="countdown"></div>
 		<p id="note"></p>
+            </div>
+            <div class="span9"> 
+            <p id="end_date">2016-09-15 22:10</p>
+            </div>
+            </div></div>-->
+        
+        <div class="container-fluid">
+  			<div class="row-fluid">
+    			<div class="span2">
+                  <div id="countdown"></div>
+    			</div>
+    		<div class="span10">
+      			<p id="end_date">2016-09-15 22:10</p>
+    			</div>
+  			</div>
+		</div>
+        
 		<script src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
 		<script src="/static/js/jquery.countdown.js"></script>
 		<script src="/static/js/countdown.js"></script>

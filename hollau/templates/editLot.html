@@ -17,8 +17,10 @@
 <script src="/static/datetimepicker/jquery.js"></script>
 <script src="/static/datetimepicker/jquery.datetimepicker.full.js"></script>
 <script>
-    $("[id='id_start_date']").each(function (){ 
-   		$(this).attr("id", "date1");
+    var test = $("p > input#id_start_date").text();
+    console.log(test)
+    $("[id='id_start_date']").parent().each(function (){
+   		$(this).hide();
 	});
     $("[id='id_end_date']").each(function (){ 
    		$(this).attr("id", "date2");

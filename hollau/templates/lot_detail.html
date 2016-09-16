@@ -18,12 +18,12 @@
 
 
 
-<p id = "pk" hidden="true">{{lot.id}}<p>
+<p id = "pk" hidden="true">{{lot.id}}</p>
 Название лота: <p>{{lot.name}}</p>
 Описание лота: <p>{{lot.description}}</p>
 Дата создания: <p>{{lot.start_date|date:"Y-m-d H:i"}}</p>
 Дата завершения: <p id="end_date">{{lot.end_date|date:"Y-m-d H:i"}}</p>
-Владелец лота: <p>{{lot.author}}</p>
+Владелец лота: <p>{{lot.author.first_name}}</p>
 Категория: <p>{{lot.category}}</p>
 Первоначальная цена: <p>{{lot.start_price}}</p>
 Последняя цена: <p id="current_price">{{lot.current_price|floatformat:2}}</p>
