@@ -10,9 +10,11 @@ from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect, HttpResponse, JsonResponse
 from django.template.context import RequestContext
 from django.core.exceptions import ObjectDoesNotExist
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from hollau import models
 import json as simplejson
 from hollau import forms
+from django.http import Http404
 
 
 def index(request):
@@ -44,14 +46,14 @@ def add_lot(request):
             name = data['name']
             description = data['description']
             start_price = data['start_price']
-            start_date = data['start_date']
+            # start_date = data['start_date']
             end_date = data['end_date']
             category = data['category']
             models.Lot.objects.create(
                 name=name,
                 description=description,
                 start_price=start_price,
-                start_date=start_date,
+                # start_date=start_date,
                 end_date=end_date,
                 author=request.user,
                 category=category,
@@ -119,6 +121,7 @@ def lot_edit(request, pk):
 
 
 def lot_detail(request, pk):
+    print request.user
     lot = models.Lot.objects.get(pk=pk)
     can_bet = (request.user != lot.author)
     categories = models.Category.objects.all()
@@ -129,8 +132,24 @@ def lot_detail(request, pk):
 def category(request, pk):
     categories = models.Category.objects.all()
     category_lots = models.Lot.objects.filter(category=pk)
-    return render(request, 'categorypage.html', {'category_lots':category_lots,
-                                                 'categories': categories})
+    paginator, page = paginate(request, category_lots)
+    return render(request, 'categorypage.html', {'paginator': paginator, 'page': page, 'category_lots': page.object_list, 'categories': categories, 'category_id': pk})
+
+
+def my_bets(request):
+    user = request.user
+    my_bet_lots = models.Bet.objects.filter(person=user)
+    categories = models.Category.objects.all()
+    my_lots = [my_bet.lot for my_bet in my_bet_lots]
+    paginator, page = paginate(request, my_lots)
+    return render(request, 'my_lot.html', {'paginator': paginator, 'page': page, 'my_lots': page.object_list, 'categories': categories})
+
+
+def my_lots(request):
+    my_lots = models.Lot.objects.filter(author=request.user)
+    categories = models.Category.objects.all()
+    paginator, page = paginate(request, my_lots)
+    return render(request, 'my_lot.html', {'paginator': paginator, 'page': page, 'my_lots': page.object_list, 'categories': categories})
 
 
 def make_bet(request):
@@ -141,6 +160,7 @@ def make_bet(request):
         lot.current_price = 0.9 * lot.start_price
     else:
         lot.current_price = 0.9 * lot.current_price
+    bet = models.Bet.objects.create(lot=lot, price=lot.current_price, person=request.user)
     lot.save()
     data = {'current_price': lot.current_price}
     return JsonResponse(data)
@@ -182,3 +202,29 @@ def check_update(request):
         'lot_id': lot_id
     }
     return JsonResponse(data)
+
+
+def paginate(request, qs):
+    try:
+        limit = int(request.GET.get('limit', 2))
+    except ValueError:
+        limit = 2
+    if limit > 2:
+        limit = 2
+    try:
+        page = int(request.GET.get('page',1))
+    except ValueError:
+        raise Http404
+    paginator = Paginator(qs, limit)
+    try:
+        page = paginator.page(page)
+    except EmptyPage:
+        page = paginator.page(paginator.num_pages)
+    return paginator, page
+
+
+def testpagination(request):
+    lots = models.Lot.objects.all()
+    paginator, page = paginate(request, lots)
+    return render(request, 'testpagepagination.html', {'paginator': paginator, 'page': page, 'lots': page.object_list, 'count': [1,2]},)
+    

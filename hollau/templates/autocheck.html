@@ -1,0 +1,44 @@
+<html>  
+<head>  
+<meta http-equiv="Content-Type" content="text/html; Charset=UTF-8">  
+<!--<script type="text/javascript" src="jquery.js"></script>-->  
+<script src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
+</head>  
+  
+<body>  
+    <p id = "lot_id">10</p>
+    
+    <form action="{% url 'test_form'%}" method="post">
+	{% csrf_token %}
+    <input type="text" name="username" id="test_username" value="" />
+    <p id = "help_message"></p>
+    
+    <div id="content"></div>  
+      
+    <script>  
+        
+        function show()  
+        {  
+            //var lot_id = $("#lot_id").text();
+            
+            console.log('in show')
+            $.ajax({  
+                url: '/check_update/',
+                data: {
+          			'lot_id': lot_id
+        		},
+                cache: false,  
+                success: function(html){  
+                    $("#content").html(html);  
+                }  
+            });  
+        }  
+      
+        $(document).ready(function(){  
+            show();  
+            setInterval('show()',1000);  
+        });  
+    </script>  
+      
+</body>  
+</html>
