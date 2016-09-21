@@ -1,4 +1,3 @@
-console.log('in script.js');  
 $("#test_username").change(function () {
       console.log( $(this).val() );
       var username = $(this).val();

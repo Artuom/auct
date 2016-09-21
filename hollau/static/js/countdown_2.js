@@ -5,25 +5,40 @@ jQuery(document).ready(function($) {
 
         // текущий элемент, обернутый в jquery
         var $this = $(this);
-        
-        console.log($this.data('timer'));
         var ts = $this.data('timer');
         
+        var note = $(this).find('p#note');
         
         
-        $this.countdown({
-            // Берём дату из заранее заготовленной
-            until: date,
+        //$(function(){
+	        
+            //var text_date = $("#end_date").text();
+            ts = new Date(ts);
+            ts = ts.getTime();
 
-            // Определяем шаблон вывода
-            layout:'{desc}<span>{d<}{dn} {dl} и {d>}'+ 
-            '{hn} {hl}, {mn} {ml}, {sn} {sl}</span>',
+	    ($(this).find("div#countdown")).countdown({
 
-            // Определяем описание
-            description: timerDescription 
+		    timestamp	: ts,
+		    callback	: function(days, hours, minutes, seconds){
+			var message = "";
+            if (days !== 0 || hours !== 0 || minutes !== 0  || seconds !== 0){
+            message += days + " дней" + ", ";
+			message += hours + " часов" + ", ";
+			message += minutes + " минут" + " и ";
+			message += seconds + " секунд" + " <br />";
+			message += "осталось до завершения!";
 
-            // Ну и про язык не забываем
-        });
+            } else {
+                message = 'Завершено!';
+            }
+            note.html(message);
+		}
+	});
 
+//});
+        
+        
+        
+        
     });
 	}); 

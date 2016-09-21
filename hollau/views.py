@@ -131,7 +131,7 @@ def lot_detail(request, pk):
 
 def category(request, pk):
     categories = models.Category.objects.all()
-    category_lots = models.Lot.objects.filter(category=pk)
+    category_lots = models.Lot.objects.filter(category=pk).order_by('-start_date')
     paginator, page = paginate(request, category_lots)
     return render(request, 'categorypage.html', {'paginator': paginator, 'page': page, 'category_lots': page.object_list, 'categories': categories, 'category_id': pk})
 
@@ -196,11 +196,10 @@ def test_check(request):
 
 def check_update(request):
     lot_id = 0
-    data = request.GET.get('lot_id')
-    print lot_id
-    data = {
-        'lot_id': lot_id
-    }
+    pk = request.GET.get('pk')
+    print pk
+    lot = models.Lot.objects.filter(pk=pk).get()
+    data = {'end_date': lot.end_date, 'current_price': lot.current_price}
     return JsonResponse(data)
 
 
@@ -224,7 +223,7 @@ def paginate(request, qs):
 
 
 def testpagination(request):
-    lots = models.Lot.objects.all()
+    lots = models.Lot.objects.all().order_by('-start_date')
     paginator, page = paginate(request, lots)
     return render(request, 'testpagepagination.html', {'paginator': paginator, 'page': page, 'lots': page.object_list, 'count': [1,2]},)
     
