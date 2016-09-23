@@ -5,21 +5,21 @@ jQuery(document).ready(function($) {
 
         // текущий элемент, обернутый в jquery
         var $this = $(this);
-        var ts = $this.data('timer');
-        
-        var note = $(this).find('p#note');
+        //var ts = $this.data('timer');
         
         
-        //$(function(){
-	        
-            //var text_date = $("#end_date").text();
-            ts = new Date(ts);
-            ts = ts.getTime();
-
 	    ($(this).find("div#countdown")).countdown({
+            
 
+            
 		    timestamp	: ts,
 		    callback	: function(days, hours, minutes, seconds){
+                
+            var note = $(this).find('p#note');
+            var ts = $(this).find('p#end_date').text();
+            ts = new Date(ts);
+            ts = ts.getTime();
+                
 			var message = "";
             if (days !== 0 || hours !== 0 || minutes !== 0  || seconds !== 0){
             message += days + " дней" + ", ";
@@ -33,6 +33,7 @@ jQuery(document).ready(function($) {
             }
             note.html(message);
 		}
+            
 	});
 
 //});

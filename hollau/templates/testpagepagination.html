@@ -5,11 +5,11 @@
         <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Open+Sans+Condensed:300" />
         <link rel="stylesheet" href="{% static 'countdown_style.css' %}" />
         <link rel="stylesheet" href="{% static 'jquery.countdown.css' %} " />
-		<script src="{% static 'js/makeabet_2.js' %}"></script>
+		
 		<script src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
 		<script src="{% static 'js/jquery.countdown.js' %}"></script>
-		<script src="{% static 'js/countdown_2.js' %}"></script>
 		<script src="{% static 'js/update_data.js' %}"></script>
+		<script src="{% static 'js/makeabet_2.js' %}"></script>
 
 
 {% endblock %}
@@ -18,17 +18,17 @@
 <div class="row">
 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 {% for lot in lots %}
-    <div data-timer="{{lot.end_date|date:'Y-m-d H:i'}}">
+<div data-timer="{{lot.end_date|date:'Y-m-d H:i'}}">
+<p id="end_date">{{lot.end_date|date:'Y-m-d H:i'}}</p>
 <p id = "pk" hidden="true">{{lot.id}}</p>
 <p><a href="{% url 'lot_detail' lot.id%}">{{lot.name}}</a></p>
 Описание лота: <p>{{lot.description}}</p>
-<p class="end_date" hidden="true" ></p> <!--end_date используется для считывания даты скриптом-->
 Первоначальная цена: <p>{{lot.start_price}}</p>
 Последняя цена: <p id="current_price">{{lot.current_price|floatformat:2}}</p>
 
 <div id="countdown"></div>
 <p id="note"></p>
-<button id="makeabet">Сделать ставку</button><br><br>
+<button id="makeabet">Сделать ставку</button><p id="help_for_bet"></p><br><br>
 
 {% if can_bet %}
 {% endif %}

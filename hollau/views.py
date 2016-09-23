@@ -155,14 +155,18 @@ def my_lots(request):
 def make_bet(request):
     pk = request.GET.get('pk')
     lot = models.Lot.objects.get(pk=pk)
-    print lot.current_price
-    if not lot.current_price:
-        lot.current_price = 0.9 * lot.start_price
+    print request.user
+    if request.user != lot.author and request.user.is_authenticated:
+        print 'ok'
+        if not lot.current_price:
+            lot.current_price = 0.9 * lot.start_price
+        else:
+            lot.current_price = 0.9 * lot.current_price
+        bet = models.Bet.objects.create(lot=lot, price=lot.current_price, person=request.user)
+        lot.save()
+        data = {'current_price': lot.current_price}
     else:
-        lot.current_price = 0.9 * lot.current_price
-    bet = models.Bet.objects.create(lot=lot, price=lot.current_price, person=request.user)
-    lot.save()
-    data = {'current_price': lot.current_price}
+        data = {'current_price': None}
     return JsonResponse(data)
 
 
@@ -195,11 +199,11 @@ def test_check(request):
 
 
 def check_update(request):
-    lot_id = 0
     pk = request.GET.get('pk')
-    print pk
     lot = models.Lot.objects.filter(pk=pk).get()
-    data = {'end_date': lot.end_date, 'current_price': lot.current_price}
+    print lot
+    bet = models.Bet.objects.filter(lot=lot).order_by('-date').first()
+    data = {'end_date': lot.end_date, 'current_price': lot.current_price, 'bet': bet.date}
     return JsonResponse(data)
 
 

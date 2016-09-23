@@ -8,10 +8,10 @@
 		<!--<script src="{% static 'js/makeabet.js' %}"></script>-->
 		<script src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
 		<script src="{% static 'js/jquery.countdown.js' %}"></script>
-		<script src="{% static 'js/countdown_2.js' %}"></script>
+		<!--<script src="{% static 'js/countdown_2.js' %}"></script>-->
 		<!--<script src="{% static 'js/countdown.js' %}"></script>-->
 		<script src="{% static 'js/makeabet_2.js' %}"></script>
-
+		<script src="{% static 'js/update_data.js' %}"></script>
 
 {% endblock %}
 
@@ -25,11 +25,15 @@
 Описание лота: <p>{{lot.description}}</p>
 <p id="end_date" hidden="true">{{lot.end_date|date:"Y-m-d H:i"}}</p> <!--end_date используется для считывания даты скриптом-->
 Первоначальная цена: <p>{{lot.start_price}}</p>
-Последняя цена: <p id="current_price">{{lot.current_price|floatformat:2}}</p>
-
+Последняя цена: 
+{% if lot.current_price %}
+<p id="current_price">{{lot.current_price|floatformat:2}}</p>
+{% else %}
+<p id="current_price">Пока ставок нет</p>
+{% endif %}
 <div id="countdown"></div>
 <p id="note"></p>
-<button id="makeabet">Сделать ставку</button><br><br>
+<button id="makeabet">Сделать ставку</button><p id="help_for_bet"></p><br><br>
 
 {% if can_bet %}
 {% endif %}

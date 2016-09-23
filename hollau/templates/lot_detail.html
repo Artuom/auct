@@ -5,19 +5,18 @@
         <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Open+Sans+Condensed:300" />
         <link rel="stylesheet" href="{% static 'countdown_style.css' %}" />
         <link rel="stylesheet" href="{% static 'jquery.countdown.css' %} " />
-	
-
 		<script src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
 		<script src="{% static 'js/jquery.countdown.js' %}"></script>
-		<script src="{% static 'js/countdown.js' %}"></script>
-		<script src="{% static 'js/makeabet.js' %}"></script>
+		<!--<script src="{% static 'js/countdown_2.js' %}"></script>-->
+		<script src="{% static 'js/update_data.js' %}"></script>
+		<script src="{% static 'js/makeabet_2.js' %}"></script>
 
 {% endblock %}
 
 {% block content %}
 
 
-
+<div data-timer="{{lot.end_date|date:'Y-m-d H:i'}}">
 <p id = "pk" hidden="true">{{lot.id}}</p>
 Название лота: <p>{{lot.name}}</p>
 Описание лота: <p>{{lot.description}}</p>
@@ -32,10 +31,11 @@
 <p id="test">Some text</p>
 
 <p>Хотите предложить свою ставку?</p>
-<button id="makeabet">Сделать ставку</button>
+<button id="makeabet">Сделать ставку</button><p id="help_for_bet"></p>
 
 {% if can_bet %}
 {% endif %}
 <body>
 </body>
+</div>
 {% endblock %}
