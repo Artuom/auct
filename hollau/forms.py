@@ -7,7 +7,7 @@ from django import forms
 class Lot(forms.ModelForm):
     class Meta:
         model = Lot
-        fields = ['name', 'description', 'start_price', 'end_date', 'category']
+        fields = ['name', 'description', 'start_price', 'end_date', 'category', 'location']
 
 class CategoryAdd(forms.ModelForm):
     class Meta:
@@ -28,3 +28,6 @@ class ProfileForm(forms.ModelForm):
 
 class TestForm(forms.Form):
     username = forms.CharField(label='Username', max_length=100)
+
+class AdressForm(forms.Form):
+    adress = forms.CharField(label='adress', max_length=100)

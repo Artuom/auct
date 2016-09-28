@@ -1,10 +1,14 @@
 {% extends 'base.html' %}
+{% load staticfiles %}
 {% block javascript %}
-	<link rel="stylesheet" type="text/css" href="/static/jquery.countdown.css">
 	<link rel="stylesheet" type="text/css" href="/static/datetimepicker/jquery.datetimepicker.css"/>
 	<script type="text/javascript" src="/static/script_section.js"></script>
-	<script type="text/javascript" src="/static/js/jquery.countdown.js"></script>
+	<script src="http://maps.googleapis.com/maps/api/js?sensor=false&amp;libraries=places"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
 	<meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+	<script src="{% static 'js/jquery.geocomplete.js' %}"></script>
+	<script src="{% static 'js/geoposition.js' %}"></script>
+	<script src="{% static 'js/logger.js' %}"></script>
 	
 	
 
@@ -14,7 +18,7 @@
   <form method="post" action="{% url 'add_lot' %}">
     {% csrf_token %}
     {{ form.as_p }}
-
+	<pre id="logger" hidden="true">Log:</pre>
     <button type="submit">Добавить лот</button>
   </form>
 <br>

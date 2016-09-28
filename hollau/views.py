@@ -49,6 +49,7 @@ def add_lot(request):
             # start_date = data['start_date']
             end_date = data['end_date']
             category = data['category']
+            location = data['location']
             models.Lot.objects.create(
                 name=name,
                 description=description,
@@ -57,6 +58,7 @@ def add_lot(request):
                 end_date=end_date,
                 author=request.user,
                 category=category,
+                location=location,
             )
             return HttpResponse('Ok')
         else:
@@ -230,4 +232,15 @@ def testpagination(request):
     lots = models.Lot.objects.all().order_by('-start_date')
     paginator, page = paginate(request, lots)
     return render(request, 'testpagepagination.html', {'paginator': paginator, 'page': page, 'lots': page.object_list, 'count': [1,2]},)
+
+
+def adress_form(request):
+    if request.method == 'GET':
+            return render(request, 'adress_form.html', {'form': forms.AdressForm})
+    else:
+        form = forms.AdressForm(request.POST)
+        if form.is_valid():
+            data = form.cleaned_data
+            print data
+            return HttpResponse(data['adress'])
     

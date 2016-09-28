@@ -14,7 +14,7 @@ class UserProfile(models.Model):
 
 
 class Category(models.Model):
-    name = models.CharField(u'Категория', max_length=30)
+    name = models.CharField(u'категория', max_length=30)
 
     def __unicode__(self):
         return self.name
@@ -31,7 +31,8 @@ class Lot(models.Model):
     start_date = models.DateTimeField(u'начало продажи', auto_now_add=True)
     end_date = models.DateTimeField(u'окончание продажи')
     lastest_propose = models.DateTimeField(u'последнее предложение', blank=True, null=True)
-    category = models.ForeignKey(Category, verbose_name=u'Категория', default=1)
+    category = models.ForeignKey(Category, verbose_name=u'категория', default=1)
+    location = models.CharField(u'локация', max_length=100, default='')
 
     class Admin:
         list_display = ("name", "price", "propose", "lastest_propose", "bought")

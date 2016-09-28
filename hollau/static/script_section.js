@@ -10,8 +10,6 @@ $("#select_section").keyup(function () {
         },
         dataType: 'json',
         success: function (data) {
-          console.log(data.value);
-          console.log(data.value.length)
           if (data.value.length === 1)  {
             $("#help_message_for_section").html('<a href="' + '">'+value+'</a>');
           }
