@@ -25,4 +25,5 @@ urlpatterns = [
     url(r'^check_update/$', views.check_update, name='check_update'),
     url(r'^testpagination/$', views.testpagination, name='testpagination'),
     url(r'^adress/$', views.adress_form, name='adress'),
+    url(r'^myprofile/$', views.user_profile, name='userprofile'),
 ]

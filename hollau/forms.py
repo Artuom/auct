@@ -9,6 +9,11 @@ class Lot(forms.ModelForm):
         model = Lot
         fields = ['name', 'description', 'start_price', 'end_date', 'category', 'location']
 
+class UserProfile(forms.ModelForm):
+    class Meta:
+        model = UserProfile
+        exclude = ['user']
+
 class CategoryAdd(forms.ModelForm):
     class Meta:
         model = Category

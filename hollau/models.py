@@ -10,7 +10,12 @@ import datetime
 
 class UserProfile(models.Model):
     user = models.ForeignKey(User, related_name='profile')
-    photo = models.TextField()
+    name = models.CharField(u'имя', max_length=50, null=True)
+    surname = models.CharField(u'фамилия', max_length=50, null=True)
+    email = models.EmailField(u'электронный адрес', null=True)
+    photo = models.TextField(null=True)
+    phonenumber = models.CharField(u'номер телефона', max_length=20, default=None, null=True)
+    userlocation = models.CharField(u'местоположение', max_length=100, default=None, null=True)
 
 
 class Category(models.Model):

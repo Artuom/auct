@@ -5,8 +5,9 @@ jQuery(document).ready(function($) {
 
         // текущий элемент, обернутый в jquery
         var $this = $(this);
-        //var ts = $this.data('timer');
-        
+        var ts = $this.data('timer');
+        ts = new Date(ts);
+        var note = $(this).find('p#note');
         
 	    ($(this).find("div#countdown")).countdown({
             
@@ -15,11 +16,7 @@ jQuery(document).ready(function($) {
 		    timestamp	: ts,
 		    callback	: function(days, hours, minutes, seconds){
                 
-            var note = $(this).find('p#note');
-            var ts = $(this).find('p#end_date').text();
-            ts = new Date(ts);
-            ts = ts.getTime();
-                
+            
 			var message = "";
             if (days !== 0 || hours !== 0 || minutes !== 0  || seconds !== 0){
             message += days + " дней" + ", ";

@@ -35,6 +35,18 @@ def logout(request):
     auth_logout(request)
     return HttpResponseRedirect('/login')
 
+@login_required(login_url='/')
+def user_profile(request):
+    print request.user.first_name
+    print request.user.last_name
+    print request.user.email
+    try:
+        userq = models.UserProfile.objects.get(user=request.user)
+    except ObjectDoesNotExist:
+        userq = models.UserProfile.objects.create(user=request.user)
+    if request.method == 'GET':
+        categories = models.Category.objects.all()
+        return render(request, 'userprofile.html', {'form':forms.UserProfile(initial={'name':request.user.first_name, 'surname':request.user.last_name, 'email':request.user.email}), 'categories': categories})
 
 def add_lot(request):
     if request.method == 'POST':
@@ -203,9 +215,11 @@ def test_check(request):
 def check_update(request):
     pk = request.GET.get('pk')
     lot = models.Lot.objects.filter(pk=pk).get()
-    print lot
     bet = models.Bet.objects.filter(lot=lot).order_by('-date').first()
-    data = {'end_date': lot.end_date, 'current_price': lot.current_price, 'bet': bet.date}
+    if bet is not None: 
+        data = {'exist': True,'end_date': lot.end_date, 'current_price': lot.current_price, 'bet': bet.date}
+    else:
+        data = {'exist': False}
     return JsonResponse(data)
 
 
