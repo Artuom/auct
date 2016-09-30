@@ -42,12 +42,24 @@ def user_profile(request):
     print request.user.email
     try:
         userq = models.UserProfile.objects.get(user=request.user)
+        print 'in try'
     except ObjectDoesNotExist:
-        userq = models.UserProfile.objects.create(user=request.user)
+        print 'in except'
+        userq = models.UserProfile.objects.create(user=request.user, first_name=request.user.first_name, last_name=request.user.last_name, email = request.user.email)
     if request.method == 'GET':
+        print userq.first_name
+        print userq.last_name
+        print userq.email
+        print userq.user.first_name
         categories = models.Category.objects.all()
-        return render(request, 'userprofile.html', {'form':forms.UserProfile(initial={'name':request.user.first_name, 'surname':request.user.last_name, 'email':request.user.email}), 'categories': categories})
-
+        return render(request, 'userprofile.html', {'form':forms.UserProfile(initial={
+            'first_name':userq.first_name, 
+            'last_name':userq.last_name, 
+            'email':userq.email,
+            'phonenumber':userq.phonenumber,
+            'userlocation':userq.userlocation,
+        }), 
+                                                    'categories': categories})
 def add_lot(request):
     if request.method == 'POST':
         form = forms.Lot(request.POST)
