@@ -23,7 +23,7 @@ jQuery(document).ready(function($) {
 			message += hours + " часов" + ", ";
 			message += minutes + " минут" + " и ";
 			message += seconds + " секунд" + " <br />";
-			message += "осталось до завершения!";
+			//message += "осталось до завершения!";
 
             } else {
                 message = 'Завершено!';

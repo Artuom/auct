@@ -1,5 +1,7 @@
 $(function(){
+	console.log('in countdown');
 	var note = $('#note');
+	var ts = '';
     var text_date = $("#end_date").text();
     ts = new Date(text_date);
     ts = ts.getTime();

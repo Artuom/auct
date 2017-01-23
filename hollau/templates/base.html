@@ -3,16 +3,22 @@
 <html>
   <head>
     <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
     <title>Шаблон Bootstrap 101</title>
     <!-- Bootstrap -->
     <link href={% static "bootstrap/css/bootstrap.min.css" %} rel="stylesheet">
-    <link href={% static 'offcanvas.css' %} rel="stylesheet">'
+    <link href={% static 'offcanvas.css' %} rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="{% static 'style.css' %}">
+    <link rel="stylesheet" href="{% static 'mycss.css' %} " />
+    
+    
     {% block stylesheet %}{% endblock %}
   </head>
   <body>
-    <script src="http://code.jquery.com/jquery-latest.js"></script>
+    <script src="https://code.jquery.com/jquery-latest.js"></script>
     <script src={% static "bootstrap/js/bootstrap.min.js" %}></script>
+    
+    
 
     <nav class="navbar navbar-fixed-top navbar-inverse">
       <div class="container">
@@ -25,51 +31,100 @@
           </button>
           <a class="navbar-brand" href="{% url 'index' %}">Project: HOLLAU</a>
         </div>
+        
         <div id="navbar" class="collapse navbar-collapse navbar-right">
           <ul class="nav navbar-nav">
-              {%if user.is_authenticated%}
+            
+            {%if user.is_authenticated%}
             <li><a href="#">{{user.first_name}}</a></li>
-              {% else %}
-              <li><a href="{%url 'login' %}">Друг</a></li>
-              {% endif %}
+            
             <li id="lots" class="active"><a href="#">Мои лоты</a></li>
             <li id="bets"><a href="#about">Мои ставки</a></li>
+            <li id="ownlot"><a href="{% url 'add_lot' %}">Создать лот</a></li>
             <li><a href="{% url 'logout' %}">Выйти</a></li>
+            {% else %}
+            <li><a href="{%url 'login' %}">Друг</a></li>
+            <li><a href="{% url 'login' %}">Войти</a></li>
+            {% endif %}
           </ul>
         </div><!-- /.nav-collapse -->
+        
+        
+        
+        
+        
       </div><!-- /.container -->
+      
+      
+      
+      <div class="container-fluid" id='header'>
+      <div class="col-xs-4" id='serviceabout'>  
+      <a href="#">О сервисе</a>
+      </div>
+      <div class="col-xs-4">
+      </div>
+      
+      
+      <div id="dd"  class="wrapper-dropdown-5 col-xs-4" tabindex="1">
+        
+        <p>Категории</p>
+        <ul class="dropdown">
+        {% for category in categories %}
+          <li><a href="{% url 'category' category.id%}" class="list-group-item">{{ category.name }}</a></li>
+        {% endfor %}
+        </ul>
+        
+      </div>
+      
+      
+      </div><!-- /.container -->
+      
+      
+      
     </nav><!-- /.navbar -->
 
-    <div class="container">
-
-      <div class="row row-offcanvas row-offcanvas-left">
-
-          <div class="col-xs-6 col-sm-3 sidebar-offcanvas" id="sidebar">
-          <div class="list-group">
-            {% for category in categories %}
-            <a href="{% url 'category' category.id%}" class="list-group-item">{{ category.name }}</a>
-            {% endfor %}
-          </div>
-        </div><!--/.sidebar-offcanvas-->
-
-        <div class="col-xs-12 col-sm-9">
-          <p class="pull-left visible-xs">
-            <button type="button" class="btn btn-primary btn-xs" data-toggle="offcanvas">Категории</button>
-          </p>
-          <div class="jumbotron">
-
-          <main>
-          <div id="container">
-			{%block content%}{%endblock%}
-		  </div>
-          </main>
-
-          </div>
-        </div><!--/.col-xs-12.col-sm-9-->
 
 
-      </div><!--/row-->
+    
+    <section id="portfolio">
+        <div class="container">
+            
+            {% block content %}{% endblock %}
+            
+        </div>
+    </section>
+    
+      
     {% block javascript %}{% endblock %}
 <script src={% static "js/offcanvas.js" %}></script>
+<script type="text/javascript">
+
+			function DropDown(el) {
+				this.dd = el;
+				this.initEvents();
+			}
+			DropDown.prototype = {
+				initEvents : function() {
+					var obj = this;
+
+					obj.dd.on('click', function(event){
+						$(this).toggleClass('active');
+						event.stopPropagation();
+					});	
+				}
+			}
+
+			$(function() {
+
+				var dd = new DropDown( $('#dd') );
+
+				$(document).click(function() {
+					// all dropdowns
+					$('.wrapper-dropdown-5').removeClass('active');
+				});
+
+			});
+
+		</script>
   </body>
 </html>

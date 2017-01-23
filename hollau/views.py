@@ -15,6 +15,7 @@ from hollau import models
 import json as simplejson
 from hollau import forms
 from django.http import Http404
+import datetime
 
 
 def index(request):
@@ -59,7 +60,32 @@ def user_profile(request):
             'phonenumber':userq.phonenumber,
             'userlocation':userq.userlocation,
         }), 
-                                                    'categories': categories})
+                                                    'categories': categories, 
+                                                    'message':False})
+                                                    
+    elif request.method == 'POST':
+        categories = models.Category.objects.all()
+        form = forms.UserProfile(request.POST)
+        if form.is_valid():
+            data = form.cleaned_data
+            first_name=data['first_name']
+            last_name=data['last_name']
+            email=data['email']
+            phonenumber=data['phonenumber']
+            userlocation=data['userlocation']
+            models.UserProfile.objects.update(user=request.user, first_name=first_name, last_name=last_name, email = email, phonenumber=phonenumber, userlocation=userlocation)
+            return render(request, 'userprofile.html', {'form':forms.UserProfile(initial={
+                'first_name':first_name, 
+                'last_name':last_name, 
+                'email':email, 
+                'phonenumber':phonenumber, 
+                'userlocation':userlocation
+            }),
+                'categories': categories, 
+                'message':True
+            })
+            
+    
 def add_lot(request):
     if request.method == 'POST':
         form = forms.Lot(request.POST)
@@ -89,7 +115,8 @@ def add_lot(request):
             return HttpResponse('NOK')
     else:
         context = {}
-        return render(request, 'add_lot_form.html', {'form': forms.Lot})
+        categories = models.Category.objects.all()
+        return render(request, 'add_lot_form.html', {'form': forms.Lot, 'categories': categories})
 
 
 def section_check(request):
@@ -149,9 +176,14 @@ def lot_edit(request, pk):
 def lot_detail(request, pk):
     print request.user
     lot = models.Lot.objects.get(pk=pk)
+    bets = models.Bet.objects.filter(lot=lot).order_by('-price')
     can_bet = (request.user != lot.author)
     categories = models.Category.objects.all()
-    return render(request, 'lot_detail.html', {'lot': lot, 'pk': pk, 'can_bet': can_bet,
+    if bets.last():
+        betuser = bets.last().person.first_name
+    else:
+        betuser = None
+    return render(request, 'lot_detail.html', {'lot': lot, 'betuser': betuser, 'pk': pk, 'can_bet': can_bet,
                                                'categories': categories})
 
 
@@ -182,7 +214,7 @@ def make_bet(request):
     pk = request.GET.get('pk')
     lot = models.Lot.objects.get(pk=pk)
     print request.user
-    if request.user != lot.author and request.user.is_authenticated:
+    if request.user != lot.author and request.user.is_authenticated and lot.end_date > datetime.datetime.now():
         print 'ok'
         if not lot.current_price:
             lot.current_price = 0.9 * lot.start_price
@@ -190,7 +222,7 @@ def make_bet(request):
             lot.current_price = 0.9 * lot.current_price
         bet = models.Bet.objects.create(lot=lot, price=lot.current_price, person=request.user)
         lot.save()
-        data = {'current_price': lot.current_price}
+        data = {'current_price': lot.current_price, 'betuser':bet.person.first_name}
     else:
         data = {'current_price': None}
     return JsonResponse(data)
@@ -237,11 +269,11 @@ def check_update(request):
 
 def paginate(request, qs):
     try:
-        limit = int(request.GET.get('limit', 2))
+        limit = int(request.GET.get('limit', 6))
     except ValueError:
-        limit = 2
-    if limit > 2:
-        limit = 2
+        limit = 6
+    if limit > 6:
+        limit = 6
     try:
         page = int(request.GET.get('page',1))
     except ValueError:

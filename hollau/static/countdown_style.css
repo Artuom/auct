@@ -46,13 +46,14 @@ section, footer{
 -----------------------------*/
 
 #note{
-	color: #666666;
+	color: #fff;
 	font-size: 12px;
 	margin: 0 auto;
-	padding: 4px;
+	padding-left: 4px;
+	padding-bottom: 4px;
 	text-align: center;
-	text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.3);
-	width: 400px;
+	/*text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.3);*/
+	/*width: 400px;*/
 }
 
 

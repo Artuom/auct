@@ -2,21 +2,24 @@
 {% load staticfiles %}
 {% block javascript %}
 		<meta charset="utf-8" />
-        <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Open+Sans+Condensed:300" />
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300" />
         <link rel="stylesheet" href="{% static 'countdown_style.css' %}" />
         <link rel="stylesheet" href="{% static 'jquery.countdown.css' %} " />
-		<script src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
+		<link rel="stylesheet" href="{% static 'freelancer.min.css' %} " />
+        <link rel="stylesheet" href="{% static 'mycss.css' %} " />
+		<script src="https://code.jquery.com/jquery-1.7.1.min.js"></script>
 		<script src="{% static 'js/jquery.countdown.js' %}"></script>
-		<!--<script src="{% static 'js/countdown_2.js' %}"></script>-->
+		<script src="{% static 'js/countdown_2.js' %}"></script>
 		<script src="{% static 'js/update_data.js' %}"></script>
 		<script src="{% static 'js/makeabet_2.js' %}"></script>
+		
 
 {% endblock %}
 
 {% block content %}
 
 
-<div data-timer="{{lot.end_date|date:'Y-m-d H:i'}}">
+<!--<div data-timer="{{lot.end_date|date:'Y-m-d H:i'}}">
 <p id = "pk" hidden="true">{{lot.id}}</p>
 Название лота: <p>{{lot.name}}</p>
 Описание лота: <p>{{lot.description}}</p>
@@ -25,16 +28,90 @@
 Владелец лота: <p>{{lot.author.first_name}}</p>
 Категория: <p>{{lot.category}}</p>
 Первоначальная цена: <p>{{lot.start_price}}</p>
-Последняя цена: <p id="current_price">{{lot.current_price|floatformat:2}}</p>
+Последняя цена: <p id="current_price">{{lot.current_price|floatformat:2}}</p><p id="betuser">Ставка от пользователь: {{betuser}}</p>
 Локация: <p>{{lot.location}}</p>
 <div id="countdown"></div>
-<p id="note"></p>
+<p id="note"></p>-->
 
-<p>Хотите предложить свою ставку?</p>
-<button id="makeabet">Сделать ставку</button><p id="help_for_bet"></p>
+
+
+<div class="row" id='biglotblock'>
+<div class="col-sm-4 sides"></div>	
+<div class="col-sm-4 portfolio-item blockview wrapper_body">
+
+<div class="cbm_wrap">
+
+<div id='lotblock' data-timer="{{lot.end_date|date:'Y/m/d H:i'}}">
+  
+<p id = "pk" hidden="true">{{lot.id}}</p>
+
+<div id='contdiv'>
+
+<div id='firstblock' class="col-xs-8">
+<div id='lotname'>
+<p class="shortdescription"><a href="{% url 'lot_detail' lot.id%}">{{lot.name}}</a></p>
+<p>Лот {{lot.id}}</p>
+</div> <!--div lotname-->
+<br>
+<div id='lotdescription' >
+<p>Описание лота:</p> <p class="shortdescription">{{lot.description}}</p>
+<p id="end_date" hidden="true">{{lot.end_date|date:"Y-m-d H:i"}}</p> <!--end_date используется для считывания даты скриптом-->
+</div> <!--div lotdescription-->
+</div> <!--div firstblock-->
+
+
+<div id="secondblock" class="col-xs-4">
+<div id='firstprice'>
+<p>max цена:</p>
+<p>{{lot.start_price}}</p>
+</div> <!--div firstprice-->
+
+<div id='categotyblock'>
+  
+</div> <!--div categoryblock-->  
+
+<div id='cuerrentprice'>
+<p>Последняя цена: 
+{% if lot.current_price %}
+<p id="current_price">{{lot.current_price|floatformat:2}}</p>
+{% else %}
+<p id="current_price">Ставок нет</p>
+{% endif %}
+</p>
+</div> <!--div currentprice-->
+</div> <!--div secondblock-->
+
+</div> <!--div container contdiv-->
+
+<div id='counter' class="col-xs-12">
+<div id="countdown"></div>
+<p id="note"></p>
+</div> <!--div counter-->
+<!--<div class='forbutton' id="makeabet" onclick=makeabet_2.js>
+<!--<button id="makeabet">Сделать ставку</button><p id="help_for_bet"></p><br><br>
+<h4>Сделать ставку!</h4>
+</div>>-->
+
+<div>
+<button id="makeabet" class="btn">Сделать ставку</button>
+</div>
 
 {% if can_bet %}
 {% endif %}
+</div>     
+
+</div>
+
+</div>
+<div class="col-sm-4 sides"></div>	
+</div> 
+
+
+
+
+{% if can_bet %}
+{% endif %}
+
 <body>
 </body>
 </div>

@@ -3,30 +3,35 @@
 {% block javascript %}
 	<link rel="stylesheet" type="text/css" href="/static/datetimepicker/jquery.datetimepicker.css"/>
 	<script type="text/javascript" src="/static/script_section.js"></script>
-	<script src="http://maps.googleapis.com/maps/api/js?sensor=false&amp;libraries=places"></script>
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+	<script src="https://maps.googleapis.com/maps/api/js?sensor=false&amp;libraries=places"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    
 	<meta http-equiv="content-type" content="text/html; charset=utf-8"/>
 	<script src="{% static 'js/jquery.geocomplete.js' %}"></script>
 	<script src="{% static 'js/geoposition.js' %}"></script>
+	<script src="{% static 'js/userlocation.js' %}"></script>
 	<script src="{% static 'js/logger.js' %}"></script>
+	<link rel="stylesheet" href="{% static 'mycss.css' %}"/>
 	
-	
-
 {% endblock %}
 
 {% block content %}
+<div class="row" id='biglotblock'>
+<div class="col-sm-4 sides"></div>	
+<div class="col-sm-4 portfolio-item blockview wrapper_body">
+<div class="cbm_wrap">
+
+
   <form method="post" action="{% url 'add_lot' %}">
+  	<div class="form-group">
     {% csrf_token %}
     {{ form.as_p }}
 	<pre id="logger" hidden="true">Log:</pre>
-    <button type="submit">Добавить лот</button>
+    <div>
+	<button type='submit' id="makeabet" class="btn">Добавить лот</button>
+	</div>
+	<div>
   </form>
-<br>
-
-<form>
-<input type="text" name="section" id="select_section" value=""/>
-    <p id = "help_message_for_section"></p>
-</form>
 
 <script src="/static/datetimepicker/jquery.js"></script>
 <script src="/static/datetimepicker/jquery.datetimepicker.full.js"></script>
@@ -40,4 +45,8 @@
     
 </script>
 <script src="/static/datetimepicker/datetime.js"></script>
+</<div>
+</<div>
+</<div>
+</<div>	
 {% endblock %}

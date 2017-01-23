@@ -67,7 +67,7 @@ class Lot(models.Model):
 class Bet(models.Model):
     lot = models.ForeignKey(Lot, verbose_name=u'лот')
     date = models.DateTimeField(u'дата', auto_now=True, editable=False)
-    price = models.IntegerField(u"новая цена")
+    price = models.FloatField(u"новая цена")
     person = models.ForeignKey(User)
 
     class Admin:
